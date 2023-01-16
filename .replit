@@ -1,0 +1,1 @@
+run = "mcs -out:main.exe 'Projeto/main.cs' 'Projeto/01categoria.cs' 'Projeto/02produto.cs' 'Projeto/03sistema.cs' 'Projeto/04cliente.cs' ; mono main.exe"

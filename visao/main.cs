@@ -1,8 +1,13 @@
 using System; 
+using Modelos;
+using Negocios;
+using System.Globalization;
+using System.Threading;
 
 public class Program {
 
   public static void Main() {
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
     Console.WriteLine("----- Bem-vindo(a) a TechBits -----");
     int op = 0;
     do {
@@ -17,10 +22,10 @@ public class Program {
           case 6 : ProdutoListar(); break;
           case 7 : ProdutoAtualizar(); break;
           case 8 : ProdutoExcluir(); break;
-          case 9 : ClienteInserir(); break;
-          case 10: ClienteListar(); break;
-          case 11: ClienteAtualizar(); break;
-          case 12: ClienteExcluir(); break;
+          case 9 : UsuarioInserir(); break;
+          case 10: UsuarioListar(); break;
+          case 11: UsuarioAtualizar(); break;
+          case 12: UsuarioExcluir(); break;
         }
       } 
       catch (Exception erro) {
@@ -45,7 +50,7 @@ public class Program {
     Console.WriteLine("07 - Atualizar");
     Console.WriteLine("08 - Excluir");
     Console.WriteLine("===================================");
-    Console.WriteLine("------------- Cliente -------------");
+    Console.WriteLine("------------- Usuario -------------");
     Console.WriteLine("09 - Inserir");
     Console.WriteLine("10 - Listar");
     Console.WriteLine("11 - Atualizar");
@@ -66,14 +71,14 @@ public class Program {
     Console.Write("Informe o nome da categoria: ");
     string descricao = Console.ReadLine();
     Categoria obj = new Categoria(id, descricao);
-    NCategoria.CategoriaInserir(obj);  // Inserir uma categoria no sistema
+    NCategoria.Inserir(obj);  // Inserir uma categoria no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
   public static void CategoriaListar() {
     Console.WriteLine("---- Listar as categorias cadastradas ----");
-    foreach (Categoria obj in Sistema.CategoriaListar())
-      NCategoria.WriteLine(obj);
+    foreach (Categoria obj in NCategoria.Listar())
+      Console.WriteLine(obj);
     Console.WriteLine("------------------------------------------");
   }
 
@@ -84,7 +89,7 @@ public class Program {
     Console.Write("Informe o novo nome da categoria: ");
     string descricao = Console.ReadLine();
     Categoria obj = new Categoria(id, descricao);
-    Sistema.CategoriaAtualizar(obj);  // Atualizar uma categoria no sistema
+    NCategoria.Atualizar(obj);  // Atualizar uma categoria no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
@@ -94,7 +99,7 @@ public class Program {
     int id = int.Parse(Console.ReadLine());
     string descricao = "";
     Categoria obj = new Categoria(id, descricao);
-    Sistema.CategoriaExcluir(obj);  // Excluir uma categoria no sistema
+    NCategoria.Excluir(obj);  // Excluir uma categoria no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
@@ -112,24 +117,17 @@ public class Program {
     CategoriaListar();
     Console.Write("Informe o id da categoria: ");
     int idCat = int.Parse(Console.ReadLine());
-    ClienteListar();
-    Console.Write("Informe o id do cliente: ");
-    int idCliente = int.Parse(Console.ReadLine());
-    Produto obj = new Produto(id, nome, qtd, preco, idCat, idCliente);
-    Sistema.ProdutoInserir(obj);  // Inserir um produto no sistema
+    Produto obj = new Produto(id, nome, qtd, preco, idCat);
+    NProduto.Inserir(obj);  // Inserir um produto no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
   public static void ProdutoListar() {
-    Console.WriteLine("----- Listar os produtos cadastrados -----");
-    foreach (Produto obj in Sistema.ProdutoListar()) {
-      Categoria c = Sistema.CategoriaListar(obj.GetIdCat());
-      Cliente s = Sistema.ClienteListar(obj.GetIdCliente());
-      Console.WriteLine($"{obj} - {c.GetDescricao()} - {s.Nome}");
-    }
+    Console.WriteLine("---- Listar as produtos cadastradas ----");
+    foreach (Produto obj in NProduto.Listar())
+      Console.WriteLine(obj);
     Console.WriteLine("------------------------------------------");
   }
-
   public static void ProdutoAtualizar() {
     Console.WriteLine("---------- Atualizar um produto ----------");
     Console.Write("Informe o id do produto a ser atualizado: ");
@@ -144,12 +142,9 @@ public class Program {
     CategoriaListar();
     Console.Write("Informe o id da categoria: ");
     int idCat = int.Parse(Console.ReadLine());
-    ClienteListar();
-    Console.Write("Informe o id do cliente: ");
-    int idCliente = int.Parse(Console.ReadLine());
-    Produto obj = new Produto(id, nome, qtd, preco, idCat, idCliente);
+    Produto obj = new Produto(id, nome, qtd, preco, idCat);
     
-    Sistema.ProdutoAtualizar(obj);  // Atualizar um produto no sistema
+    NProduto.Atualizar(obj);  // Atualizar um produto no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
@@ -158,48 +153,56 @@ public class Program {
     Console.Write("Informe o id do produto a ser excluído: ");
     int id = int.Parse(Console.ReadLine());
     Produto obj = new Produto(id);
-    Sistema.ProdutoExcluir(obj);  // Excluir um produto no sistema
+    NProduto.Excluir(obj);  // Excluir um produto no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
-  public static void ClienteInserir() {
-    Console.WriteLine("-------- Inserir um novo cliente --------");
-    Console.Write("Informe o nome do cliente: ");
+  public static void UsuarioInserir() {
+    Console.WriteLine("-------- Inserir um novo Usuario --------");
+    Console.Write("Informe o nome do Usuario: ");
     string nome = Console.ReadLine();
-    Console.Write("Informe o telefone do cliente: ");
-    string fone = Console.ReadLine();
-    Cliente obj = new Cliente {Nome = nome, Telefone = fone };
-    Sistema.ClienteInserir(obj);  // Inserir um cliente no sistema
+    Console.Write("Informe a data de nascimento do Usuario: ");
+    DateTime data = DateTime.Parse(Console.ReadLine());
+    Console.Write("Informe a senha do Usuario: ");
+    string senha = Console.ReadLine();
+    Console.Write("O Usuario é um administrador? (s/n) ");
+    char adm = Console.ReadLine()[0];
+    bool isAdm = false;
+    if (adm == 's'){
+      isAdm = true;
+    }
+    Usuario obj = new Usuario {Nome = nome, Nascimento = data, Senha=senha, Admin = isAdm};
+    NUsuario.Inserir(obj);  // Inserir um Usuario no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
-  public static void ClienteListar() {
-    Console.WriteLine("----- Listar os clientes cadastrados -----");
-    foreach (Cliente obj in Sistema.ClienteListar())
+  public static void UsuarioListar() {
+    Console.WriteLine("----- Listar os Usuarios cadastrados -----");
+    foreach (Usuario obj in NUsuario.Listar())
       Console.WriteLine(obj);
     Console.WriteLine("------------------------------------------");
   }
 
-  public static void ClienteAtualizar() {
-    Console.WriteLine("---------- Atualizar um cliente ----------");
-    Console.Write("Informe o id do cliente a ser atualizado: ");
+  public static void UsuarioAtualizar() {
+    Console.WriteLine("---------- Atualizar um Usuario ----------");
+    Console.Write("Informe o id do Usuario a ser atualizado: ");
     int id = int.Parse(Console.ReadLine());
-    Console.Write("Informe o nome do cliente: ");
+    Console.Write("Informe o nome do Usuario: ");
     string nome = Console.ReadLine();
-    Console.Write("Informe o telefone do cliente: ");
-    string fone = Console.ReadLine();
-    Cliente obj = new Cliente {Id = id, Nome = nome, Telefone = fone };
-    Sistema.ClienteAtualizar(obj);  // Atualizar um cliente no sistema
+    Console.Write("Informe a data de nascimento do Usuario (dd/mm/aaaa): ");
+    DateTime data = DateTime.Parse(Console.ReadLine());
+    Usuario obj = new Usuario {Id = id, Nome = nome, Nascimento = data };
+    NUsuario.Atualizar(obj);  // Atualizar um Usuario no sistema
     
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
-  public static void ClienteExcluir() {
-    Console.WriteLine("----------- Excluir um cliente -----------");
-    Console.Write("Informe o id do cliente a ser excluído: ");
+  public static void UsuarioExcluir() {
+    Console.WriteLine("----------- Excluir um Usuario -----------");
+    Console.Write("Informe o id do Usuario a ser excluído: ");
     int id = int.Parse(Console.ReadLine());
-    Cliente obj = new Cliente {Id = id };
-    Sistema.ClienteExcluir(obj);  // Excluir um cliente no sistema
+    Usuario obj = new Usuario {Id = id };
+    NUsuario.Excluir(obj);  // Excluir um usuario no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
   

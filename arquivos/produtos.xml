@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduto xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Produto>
+    <id>2</id>
+    <qtd>6</qtd>
+    <idCat>1</idCat>
+    <titulo>Asus 3748</titulo>
+    <preco>2300</preco>
+  </Produto>
+</ArrayOfProduto>

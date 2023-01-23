@@ -1,9 +1,10 @@
 using System;
 
-class Produto {
-  private int id, qtd, idCat;
-  private string titulo;
-  private double preco;
+public class Produto {
+  public int id, qtd, idCat;
+  public string titulo;
+  public double preco;
+  public Produto() { }
   public Produto(int id, string titulo, int qtd, double preco, int idCat) {
     this.id = id;
     this.titulo = titulo;
@@ -11,6 +12,7 @@ class Produto {
     if (preco > 0) this.preco = preco;
     this.idCat = idCat;
   }
+  
   public Produto(int id) {
     this.id = id;
   }
@@ -32,8 +34,8 @@ class Produto {
   public int GetId() {
     return id;
   }
-  public string GetNome() {
-    return nome;
+  public string GetTitulo() {
+    return titulo;
   }
   public int GetQtd() {
     return qtd;

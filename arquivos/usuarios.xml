@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUsuario xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Usuario>
+    <Id>1</Id>
+    <Nome>Antonio</Nome>
+    <Senha>carros23</Senha>
+    <Nascimento>2003-10-03T00:00:00</Nascimento>
+    <Admin>true</Admin>
+  </Usuario>
+  <Usuario>
+    <Id>2</Id>
+    <Nome>Lavinia</Nome>
+    <Senha>lala123</Senha>
+    <Nascimento>2003-09-04T00:00:00</Nascimento>
+    <Admin>false</Admin>
+  </Usuario>
+  <Usuario>
+    <Id>3</Id>
+    <Nome>lala</Nome>
+    <Senha>83992</Senha>
+    <Nascimento>2023-09-10T00:00:00</Nascimento>
+    <Admin>true</Admin>
+  </Usuario>
+</ArrayOfUsuario>

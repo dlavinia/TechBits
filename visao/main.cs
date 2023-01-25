@@ -5,14 +5,69 @@ using System.Globalization;
 using System.Threading;
 
 public class Program {
+  private static bool adminLogado = false;
+  private static Usuario userLogado = null;
 
   public static void Main() {
     Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
+    Console.WriteLine();
+    Console.WriteLine("===================================");
     Console.WriteLine("----- Bem-vindo(a) a TechBits -----");
     int op = 0;
     do {
       try {
         op = Menu();
+        switch(op) {
+        case 1:
+          if (Login()) {            
+            if (adminLogado) MainAdmin();
+            else MainUser();
+          } else {
+            Console.WriteLine("Usuário ou senha inválidos");
+          }; break;
+        }
+      } 
+      catch (Exception erro) {
+        op = -1;
+        Console.WriteLine("Erro: " + erro.Message);
+      }
+    } while (op != 0);
+  }
+  
+  public static int Menu() {
+    Console.WriteLine("===================================");
+    Console.WriteLine("01 - Login");
+    Console.WriteLine("00 - Sair");
+    Console.WriteLine("===================================");
+    Console.WriteLine();
+    Console.Write("Opção: ");
+    int op = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+    return op;
+  }
+
+  public static bool Login() {
+    Console.WriteLine("===================================");
+    Console.WriteLine("-------------- Login --------------");
+    Console.Write("Nome do usuário: ");
+    string n = Console.ReadLine();
+    Console.Write("Senha: ");
+    string s = Console.ReadLine();
+    Usuario user = NUsuario.Entrar(n, s);
+    if (user != null) {
+      adminLogado = user.Admin;
+      userLogado = user;
+      return true;
+    }
+    return false;
+  }
+
+  public static void MainAdmin() {
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
+    int op = 0;
+    do {
+      try {
+        op = MenuAdmin();
         switch(op) {
           case 1 : CategoriaInserir(); break;
           case 2 : CategoriaListar(); break;
@@ -35,7 +90,7 @@ public class Program {
     } while (op != 0);
   }
 
-  public static int Menu() {
+  public static int MenuAdmin() {
     Console.WriteLine();
     Console.WriteLine("===================================");
     Console.WriteLine("------------ Categoria ------------");
@@ -55,6 +110,44 @@ public class Program {
     Console.WriteLine("10 - Listar");
     Console.WriteLine("11 - Atualizar");
     Console.WriteLine("12 - Excluir");
+    Console.WriteLine("===================================");
+    Console.WriteLine("00 - Sair");
+    Console.WriteLine();
+    Console.Write("Opção: ");
+    int op = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+    return op;
+  }
+  
+  public static void MainUser() {
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
+    int op = 0;
+    do {
+      try {
+        op = MenuUser();
+        switch(op) {
+          case 1 : CategoriaInserir(); break;
+          case 2 : ProdutoListar(); break;
+          //case 3 : AddCarrinho(); break;
+          //case 4 : VerCarrinho(); break;
+          //case 5 : ClearCarrinho(); break;
+        }
+      } 
+      catch (Exception erro) {
+        op = -1;
+        Console.WriteLine("Erro: " + erro.Message);
+      }
+    } while (op != 0);
+  }
+
+  public static int MenuUser() {
+    Console.WriteLine();
+    Console.WriteLine("===================================");
+    Console.WriteLine("01 - Listar categorias");
+    Console.WriteLine("02 - Listar produtos");
+    Console.WriteLine("03 - Adicionar produto no carrinho");
+    Console.WriteLine("04 - Ver carrinho");
+    Console.WriteLine("05 - Limpar carrinho");
     Console.WriteLine("===================================");
     Console.WriteLine("00 - Sair");
     Console.WriteLine();
@@ -128,6 +221,7 @@ public class Program {
       Console.WriteLine(obj);
     Console.WriteLine("------------------------------------------");
   }
+  
   public static void ProdutoAtualizar() {
     Console.WriteLine("---------- Atualizar um produto ----------");
     Console.Write("Informe o id do produto a ser atualizado: ");
@@ -161,18 +255,20 @@ public class Program {
     Console.WriteLine("-------- Inserir um novo Usuario --------");
     Console.Write("Informe o nome do Usuario: ");
     string nome = Console.ReadLine();
-    Console.Write("Informe a data de nascimento do Usuario: ");
-    DateTime data = DateTime.Parse(Console.ReadLine());
+    Console.Write("Informe o nome do login: ");
+    string user = Console.ReadLine();
     Console.Write("Informe a senha do Usuario: ");
     string senha = Console.ReadLine();
+    Console.Write("Informe a data de nascimento do Usuario: ");
+    DateTime data = DateTime.Parse(Console.ReadLine());
     Console.Write("O Usuario é um administrador? (s/n) ");
     char adm = Console.ReadLine()[0];
     bool isAdm = false;
     if (adm == 's'){
       isAdm = true;
     }
-    Usuario obj = new Usuario {Nome = nome, Nascimento = data, Senha=senha, Admin = isAdm};
-    NUsuario.Inserir(obj);  // Inserir um Usuario no sistema
+    Usuario obj = new Usuario {Nome = nome, User = user, Senha = senha, Nascimento = data, Admin = isAdm};
+    NUsuario.Inserir(obj);  // Inserir um usuário no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
@@ -192,7 +288,7 @@ public class Program {
     Console.Write("Informe a data de nascimento do Usuario (dd/mm/aaaa): ");
     DateTime data = DateTime.Parse(Console.ReadLine());
     Usuario obj = new Usuario {Id = id, Nome = nome, Nascimento = data };
-    NUsuario.Atualizar(obj);  // Atualizar um Usuario no sistema
+    NUsuario.Atualizar(obj);  // Atualizar um usuário no sistema
     
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
@@ -202,7 +298,7 @@ public class Program {
     Console.Write("Informe o id do Usuario a ser excluído: ");
     int id = int.Parse(Console.ReadLine());
     Usuario obj = new Usuario {Id = id };
-    NUsuario.Excluir(obj);  // Excluir um usuario no sistema
+    NUsuario.Excluir(obj);  // Excluir um usuário no sistema
     Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
   

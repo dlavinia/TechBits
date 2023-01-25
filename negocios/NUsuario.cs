@@ -43,6 +43,13 @@ namespace Negocios {
         Salvar(users);
       }
     }
+    public static Usuario Entrar(string usuario, string senha) {
+      users = Abrir();
+      foreach (Usuario i in users)
+        if(i.User == usuario && i.Senha == senha)
+          return i;
+      return null;
+    }
     private static string arquivo = "arquivos/usuarios.xml";
   
     private static List<Usuario> Abrir() {

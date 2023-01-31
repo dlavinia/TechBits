@@ -47,6 +47,6 @@ public class Produto {
     return idCat;
   }
   public override string ToString() {
-    return $"{id} - {titulo} - {qtd} - {preco:0.00}";
+    return $"{id} - {titulo} - {qtd} - {preco:0.00} - {idCat}";
   }
 }

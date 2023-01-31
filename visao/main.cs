@@ -11,8 +11,8 @@ public class Program {
   public static void Main() {
     Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
     Console.WriteLine();
-    Console.WriteLine("===================================");
-    Console.WriteLine("----- Bem-vindo(a) a TechBits -----");
+    Console.WriteLine("=========================================");
+    Console.WriteLine("-------- Bem-vindo(a) a TechBits --------");
     int op = 0;
     do {
       try {
@@ -23,8 +23,11 @@ public class Program {
             if (adminLogado) MainAdmin();
             else MainUser();
           } else {
+            Console.WriteLine();
             Console.WriteLine("Usuário ou senha inválidos");
+            Console.WriteLine();
           }; break;
+        case 2 : Cadastro(); break;
         }
       } 
       catch (Exception erro) {
@@ -35,10 +38,11 @@ public class Program {
   }
   
   public static int Menu() {
-    Console.WriteLine("===================================");
+    Console.WriteLine("=========================================");
     Console.WriteLine("01 - Login");
-    Console.WriteLine("00 - Sair");
-    Console.WriteLine("===================================");
+    Console.WriteLine("02 - Cadastre-se");
+    Console.WriteLine("=========================================");
+    Console.WriteLine("00 - Fechar");
     Console.WriteLine();
     Console.Write("Opção: ");
     int op = int.Parse(Console.ReadLine());
@@ -47,8 +51,8 @@ public class Program {
   }
 
   public static bool Login() {
-    Console.WriteLine("===================================");
-    Console.WriteLine("-------------- Login --------------");
+    Console.WriteLine("=========================================");
+    Console.WriteLine("----------------- Login -----------------");
     Console.Write("Nome do usuário: ");
     string n = Console.ReadLine();
     Console.Write("Senha: ");
@@ -92,25 +96,27 @@ public class Program {
 
   public static int MenuAdmin() {
     Console.WriteLine();
-    Console.WriteLine("===================================");
-    Console.WriteLine("------------ Categoria ------------");
+    Console.WriteLine("=========================================");
+    Console.WriteLine($"Olá, {userLogado.Nome}");
+    Console.WriteLine("=========================================");
+    Console.WriteLine("--------------- Categoria ---------------");
     Console.WriteLine("01 - Inserir");
     Console.WriteLine("02 - Listar");
     Console.WriteLine("03 - Atualizar");
     Console.WriteLine("04 - Excluir");
-    Console.WriteLine("===================================");
-    Console.WriteLine("------------- Produto -------------");
+    Console.WriteLine("=========================================");
+    Console.WriteLine("---------------- Produto ----------------");
     Console.WriteLine("05 - Inserir");
     Console.WriteLine("06 - Listar");
     Console.WriteLine("07 - Atualizar");
     Console.WriteLine("08 - Excluir");
-    Console.WriteLine("===================================");
-    Console.WriteLine("------------- Usuario -------------");
-    Console.WriteLine("09 - Inserir");
+    Console.WriteLine("=========================================");
+    Console.WriteLine("---------------- Usuario ----------------");
+    Console.WriteLine("09 - Inserir admin");
     Console.WriteLine("10 - Listar");
     Console.WriteLine("11 - Atualizar");
     Console.WriteLine("12 - Excluir");
-    Console.WriteLine("===================================");
+    Console.WriteLine("=========================================");
     Console.WriteLine("00 - Sair");
     Console.WriteLine();
     Console.Write("Opção: ");
@@ -126,7 +132,7 @@ public class Program {
       try {
         op = MenuUser();
         switch(op) {
-          case 1 : CategoriaInserir(); break;
+          case 1 : CategoriaListar(); break;
           case 2 : ProdutoListar(); break;
           //case 3 : AddCarrinho(); break;
           //case 4 : VerCarrinho(); break;
@@ -142,13 +148,15 @@ public class Program {
 
   public static int MenuUser() {
     Console.WriteLine();
-    Console.WriteLine("===================================");
+    Console.WriteLine("=========================================");
+    Console.WriteLine($"Olá, {userLogado.Nome}");
+    Console.WriteLine("=========================================");
     Console.WriteLine("01 - Listar categorias");
     Console.WriteLine("02 - Listar produtos");
     Console.WriteLine("03 - Adicionar produto no carrinho");
     Console.WriteLine("04 - Ver carrinho");
     Console.WriteLine("05 - Limpar carrinho");
-    Console.WriteLine("===================================");
+    Console.WriteLine("=========================================");
     Console.WriteLine("00 - Sair");
     Console.WriteLine();
     Console.Write("Opção: ");
@@ -157,8 +165,23 @@ public class Program {
     return op;
   }
 
+  public static void Cadastro() {
+    Console.WriteLine("-------------- Cadastre-se --------------");
+    Console.Write("Informe o nome do Usuario: ");
+    string nome = Console.ReadLine();
+    Console.Write("Informe o nome do login: ");
+    string user = Console.ReadLine();
+    Console.Write("Informe a senha do Usuario: ");
+    string senha = Console.ReadLine();
+    Console.Write("Informe a data de nascimento do Usuario: ");
+    DateTime data = DateTime.Parse(Console.ReadLine());
+    Usuario obj = new Usuario {Nome = nome, User = user, Senha = senha, Nascimento = data, Admin = false};
+    NUsuario.Inserir(obj);  // Cadastra um novo usuário no sistema
+    Console.WriteLine("---- Operação realizada com sucesso! ----");
+  }
+
   public static void CategoriaInserir() {
-    Console.WriteLine("--- Inserir uma nova categoria ---");
+    Console.WriteLine("------- Inserir uma nova categoria ------");
     Console.Write("Informe o id: ");
     int id = int.Parse(Console.ReadLine());
     Console.Write("Informe o nome da categoria: ");
@@ -169,14 +192,14 @@ public class Program {
   }
 
   public static void CategoriaListar() {
-    Console.WriteLine("---- Listar as categorias cadastradas ----");
+    Console.WriteLine("---- Listar as categorias cadastradas ---");
     foreach (Categoria obj in NCategoria.Listar())
       Console.WriteLine(obj);
     Console.WriteLine("------------------------------------------");
   }
 
   public static void CategoriaAtualizar() {
-    Console.WriteLine("-------- Atualizar uma categoria --------");
+    Console.WriteLine("-------- Atualizar uma categoria ---------");
     Console.Write("Informe o id da categoria a ser atualizada: ");
     int id = int.Parse(Console.ReadLine());
     Console.Write("Informe o novo nome da categoria: ");

@@ -8,4 +8,12 @@
     <id>2</id>
     <descricao>Tvs</descricao>
   </Categoria>
+  <Categoria>
+    <id>3</id>
+    <descricao>Periféricos</descricao>
+  </Categoria>
+  <Categoria>
+    <id>4</id>
+    <descricao>Games</descricao>
+  </Categoria>
 </ArrayOfCategoria>

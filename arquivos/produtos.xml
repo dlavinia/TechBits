@@ -1,10 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduto xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Produto>
+    <id>1</id>
+    <qtd>3</qtd>
+    <idCat>1</idCat>
+    <titulo>Acer Aspire 5</titulo>
+    <preco>3000</preco>
+  </Produto>
+  <Produto>
     <id>2</id>
     <qtd>6</qtd>
     <idCat>1</idCat>
     <titulo>Asus 3748</titulo>
     <preco>2300</preco>
+  </Produto>
+  <Produto>
+    <id>3</id>
+    <qtd>5</qtd>
+    <idCat>2</idCat>
+    <titulo>Tv LED Samsung 32"</titulo>
+    <preco>1200</preco>
+  </Produto>
+  <Produto>
+    <id>4</id>
+    <qtd>7</qtd>
+    <idCat>2</idCat>
+    <titulo>Smart Tv LG 43"</titulo>
+    <preco>2000</preco>
+  </Produto>
+  <Produto>
+    <id>5</id>
+    <qtd>8</qtd>
+    <idCat>3</idCat>
+    <titulo>Mouse Logitech G203</titulo>
+    <preco>120</preco>
+  </Produto>
+  <Produto>
+    <id>6</id>
+    <qtd>5</qtd>
+    <idCat>3</idCat>
+    <titulo>Headset Havit H2002D</titulo>
+    <preco>200</preco>
+  </Produto>
+  <Produto>
+    <id>7</id>
+    <qtd>2</qtd>
+    <idCat>4</idCat>
+    <titulo>PS4</titulo>
+    <preco>1800</preco>
+  </Produto>
+  <Produto>
+    <id>8</id>
+    <qtd>3</qtd>
+    <idCat>4</idCat>
+    <titulo>PS5</titulo>
+    <preco>4500</preco>
   </Produto>
 </ArrayOfProduto>

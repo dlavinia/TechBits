@@ -17,7 +17,7 @@ namespace Negocios {
       return Abrir();
     }
     public static Produto Listar(int id) {
-      Abrir();
+     prods = Abrir();
       foreach (Produto obj in prods) 
         if (obj.GetId() == id) return obj;
       return null;

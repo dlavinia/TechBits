@@ -20,7 +20,7 @@
     <Id>3</Id>
     <Nome>Gilbert Azevedo</Nome>
     <User>gilbert</User>
-    <Senha>83992</Senha>
+    <Senha>1234</Senha>
     <Nascimento>2023-09-10T00:00:00</Nascimento>
     <Admin>false</Admin>
   </Usuario>

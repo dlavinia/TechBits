@@ -12,7 +12,7 @@ namespace Negocios {
         users = Abrir();
         int id = 0;
         foreach (Usuario aux in users)
-        if (aux.Id > id) id = aux.Id;
+          if (aux.Id > id) id = aux.Id;
         user.Id = id + 1;
         users.Add(user);
         Salvar(users);

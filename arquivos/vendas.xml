@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfVenda xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Venda>
+    <Id>1</Id>
+    <Data>2023-02-08T21:04:45.154682+00:00</Data>
+    <Carrinho>false</Carrinho>
+    <IdUser>3</IdUser>
+    <NomeUser>Gilbert Azevedo</NomeUser>
+    <Itens>
+      <ItemVenda>
+        <Prod>
+          <id>4</id>
+          <qtd>7</qtd>
+          <idCat>2</idCat>
+          <titulo>Smart Tv LG 43"</titulo>
+          <preco>2000</preco>
+        </Prod>
+        <IdProd>4</IdProd>
+        <IdVenda>0</IdVenda>
+        <Qtd>1</Qtd>
+        <Preco>2000</Preco>
+      </ItemVenda>
+      <ItemVenda>
+        <Prod>
+          <id>2</id>
+          <qtd>6</qtd>
+          <idCat>1</idCat>
+          <titulo>Asus 3748</titulo>
+          <preco>2300</preco>
+        </Prod>
+        <IdProd>2</IdProd>
+        <IdVenda>0</IdVenda>
+        <Qtd>1</Qtd>
+        <Preco>2300</Preco>
+      </ItemVenda>
+      <ItemVenda>
+        <Prod>
+          <id>1</id>
+          <qtd>3</qtd>
+          <idCat>1</idCat>
+          <titulo>Acer Aspire 5</titulo>
+          <preco>3000</preco>
+        </Prod>
+        <IdProd>1</IdProd>
+        <IdVenda>0</IdVenda>
+        <Qtd>2</Qtd>
+        <Preco>3000</Preco>
+      </ItemVenda>
+    </Itens>
+  </Venda>
+  <Venda>
+    <Id>2</Id>
+    <Data>2023-02-08T21:17:59.851329+00:00</Data>
+    <Carrinho>false</Carrinho>
+    <IdUser>3</IdUser>
+    <NomeUser>Gilbert Azevedo</NomeUser>
+    <Itens>
+      <ItemVenda>
+        <Prod>
+          <id>2</id>
+          <qtd>6</qtd>
+          <idCat>1</idCat>
+          <titulo>Asus 3748</titulo>
+          <preco>2300</preco>
+        </Prod>
+        <IdProd>2</IdProd>
+        <IdVenda>0</IdVenda>
+        <Qtd>3</Qtd>
+        <Preco>2300</Preco>
+      </ItemVenda>
+    </Itens>
+  </Venda>
+</ArrayOfVenda>

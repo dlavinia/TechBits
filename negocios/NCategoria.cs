@@ -18,7 +18,7 @@ namespace Negocios {
 ;
     }
     public static Categoria Listar(int id) {
-      Abrir();
+      cats = Abrir();
       foreach (Categoria obj in cats) 
         if (obj.GetId() == id) return obj;
       return null;
@@ -30,7 +30,7 @@ namespace Negocios {
       Salvar(cats);
     }
     public static void Excluir(Categoria cat) {
-      Abrir();
+      cats = Abrir();
       Categoria aux = Listar(cat.GetId());
       if (aux != null) {
         cats.Remove(aux);

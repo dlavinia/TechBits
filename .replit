@@ -1,1 +1,1 @@
-run = "mcs -out:main.exe 'visao/main.cs' 'modelos/01categoria.cs' 'modelos/02produto.cs' 'modelos/03usuario.cs' 'negocios/NCategoria.cs' 'negocios/NProduto.cs' 'negocios/NUsuario.cs' 'negocios/arquivo.cs' ; mono main.exe"
+run = "mcs -out:main.exe 'visao/main.cs' 'modelos/01categoria.cs' 'modelos/02produto.cs' 'modelos/03usuario.cs'  'modelos/04itemvenda.cs' 'modelos/05venda.cs' 'negocios/NCategoria.cs' 'negocios/NProduto.cs' 'negocios/NUsuario.cs' 'negocios/NVenda.cs' 'negocios/arquivo.cs' ; mono main.exe"

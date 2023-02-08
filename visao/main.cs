@@ -7,12 +7,10 @@ using System.Threading;
 public class Program {
   private static bool adminLogado = false;
   private static Usuario userLogado = null;
-
+  private static Venda usuarioVenda = null;
+  
   public static void Main() {
     Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
-    Console.WriteLine();
-    Console.WriteLine("=========================================");
-    Console.WriteLine("-------- Bem-vindo(a) a TechBits --------");
     int op = 0;
     do {
       try {
@@ -38,6 +36,9 @@ public class Program {
   }
   
   public static int Menu() {
+    Console.WriteLine();
+    Console.WriteLine("=========================================");
+    Console.WriteLine("-------- Bem-vindo(a) a TechBits --------");
     Console.WriteLine("=========================================");
     Console.WriteLine("01 - Login");
     Console.WriteLine("02 - Cadastre-se");
@@ -67,7 +68,6 @@ public class Program {
   }
 
   public static void MainAdmin() {
-    Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
     int op = 0;
     do {
       try {
@@ -126,7 +126,6 @@ public class Program {
   }
   
   public static void MainUser() {
-    Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
     int op = 0;
     do {
       try {
@@ -134,9 +133,10 @@ public class Program {
         switch(op) {
           case 1 : CategoriaListar(); break;
           case 2 : ProdutoListar(); break;
-          //case 3 : AddCarrinho(); break;
-          //case 4 : VerCarrinho(); break;
-          //case 5 : ClearCarrinho(); break;
+          case 3 : AdicionarCarrinho(); break;
+          case 4 : VerCarrinho(); break;
+          case 5 : FinalizarCompra(); break;
+          case 6 : ClearCarrinho(); break;
         }
       } 
       catch (Exception erro) {
@@ -155,7 +155,8 @@ public class Program {
     Console.WriteLine("02 - Listar produtos");
     Console.WriteLine("03 - Adicionar produto no carrinho");
     Console.WriteLine("04 - Ver carrinho");
-    Console.WriteLine("05 - Limpar carrinho");
+    Console.WriteLine("05 - Finalizar compra");
+    Console.WriteLine("06 - Limpar carrinho");
     Console.WriteLine("=========================================");
     Console.WriteLine("00 - Sair");
     Console.WriteLine();
@@ -239,7 +240,7 @@ public class Program {
   }
 
   public static void ProdutoListar() {
-    Console.WriteLine("---- Listar as produtos cadastradas ----");
+    Console.WriteLine("---- Listar os produtos cadastrados ----");
     foreach (Produto obj in NProduto.Listar())
       Console.WriteLine(obj);
     Console.WriteLine("------------------------------------------");
@@ -322,7 +323,54 @@ public class Program {
     int id = int.Parse(Console.ReadLine());
     Usuario obj = new Usuario {Id = id };
     NUsuario.Excluir(obj);  // Excluir um usuário no sistema
-    Console.WriteLine("---- Operação realizada com sucesso! ----");
+    Console.WriteLine("---- Operação realizada com sucesso! -----");
+  }
+
+  public static void AdicionarCarrinho() {
+    ProdutoListar();
+    Console.Write("Informe o id do produto a ser comprado: ");
+    int id = int.Parse(Console.ReadLine());
+    Console.Write("Informe a quantidade: ");
+    int qtd = int.Parse(Console.ReadLine());
+    Produto p = NProduto.Listar(id);
+    if (p != null) {
+      if (usuarioVenda == null)
+        usuarioVenda = new Venda(DateTime.Now, userLogado);
+      //NVenda.Inserir(usuarioVenda);
+      NVenda.AddCarrinho(usuarioVenda, qtd, p);
+    }
+    else {
+      Console.WriteLine("Produto não encontrado!");
+    }
+    Console.WriteLine("---- Operação realizada com sucesso! -----");
+  }
+
+  public static void VerCarrinho() {
+    Console.WriteLine("----------------- Carrinho ---------------");
+    if (usuarioVenda == null) {
+      Console.WriteLine("Carrinho vazio");
+      return;
+    }
+    foreach (ItemVenda obj in  NVenda.ListarItens(usuarioVenda))
+      Console.WriteLine(obj);
+    Console.WriteLine("------------------------------------------");
+  }
+
+  public static void FinalizarCompra() {
+    Console.WriteLine("=========== Finalizar Compra ==========");
+    VerCarrinho();
+    if (usuarioVenda == null) {
+      Console.WriteLine("Carrinho vazio");
+      return;
+    }
+    NVenda.FinalizarCompra(usuarioVenda);
+    usuarioVenda = null;
+    Console.WriteLine("---- Compra realizada com sucesso! ----");
   }
   
+  public static void ClearCarrinho() {
+    if (usuarioVenda != null)
+      NVenda.Excluir(usuarioVenda);
+    usuarioVenda = null;
+  }
 }

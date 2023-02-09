@@ -10,13 +10,17 @@ namespace Negocios {
     private static List<Venda> vendas = new List<Venda>();
 
     public static List<Venda> Listar() {
-      return vendas;
+      return Abrir();
     }
     public static Venda Listar(int id) {
       vendas = Abrir();
       foreach (Venda obj in vendas) 
         if (obj.Id == id) return obj;
       return null;
+    }
+
+    public static List<ItemVenda> ListarItens(Venda v) {
+      return v.ItemListar();
     }
 
     public static void AddCarrinho(Venda v, int qtd, Produto prod) {
@@ -36,10 +40,6 @@ namespace Negocios {
       vendas = Abrir();
       v.ItemExcluir();
       Salvar(vendas);
-    }
-
-    public static List<ItemVenda> ListarItens(Venda v) {
-      return v.ItemListar();
     }
     
     private static string arquivo = "arquivos/vendas.xml";

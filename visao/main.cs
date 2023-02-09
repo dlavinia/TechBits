@@ -67,6 +67,21 @@ public class Program {
     return false;
   }
 
+  public static void Cadastro() {
+    Console.WriteLine("-------------- Cadastre-se --------------");
+    Console.Write("Informe o nome do usuário: ");
+    string nome = Console.ReadLine();
+    Console.Write("Informe o nome do login: ");
+    string user = Console.ReadLine();
+    Console.Write("Informe a senha do usuário: ");
+    string senha = Console.ReadLine();
+    Console.Write("Informe a data de nascimento do usuário: ");
+    DateTime data = DateTime.Parse(Console.ReadLine());
+    Usuario obj = new Usuario {Nome = nome, User = user, Senha = senha, Nascimento = data, Admin = false};
+    NUsuario.Inserir(obj);  // Cadastra um novo usuário no sistema
+    Console.WriteLine("---- Operação realizada com sucesso! ----");
+  }
+  
   public static void MainAdmin() {
     int op = 0;
     do {
@@ -85,6 +100,7 @@ public class Program {
           case 10: UsuarioListar(); break;
           case 11: UsuarioAtualizar(); break;
           case 12: UsuarioExcluir(); break;
+          case 13: VerVendas(); break;
         }
       } 
       catch (Exception erro) {
@@ -111,11 +127,14 @@ public class Program {
     Console.WriteLine("07 - Atualizar");
     Console.WriteLine("08 - Excluir");
     Console.WriteLine("=========================================");
-    Console.WriteLine("---------------- Usuario ----------------");
+    Console.WriteLine("---------------- Usuário ----------------");
     Console.WriteLine("09 - Inserir admin");
     Console.WriteLine("10 - Listar");
     Console.WriteLine("11 - Atualizar");
     Console.WriteLine("12 - Excluir");
+    Console.WriteLine("=========================================");
+    Console.WriteLine("----------------- Vendas ----------------");
+    Console.WriteLine("13 - Ver relatorio de vendas");
     Console.WriteLine("=========================================");
     Console.WriteLine("00 - Sair");
     Console.WriteLine();
@@ -164,21 +183,6 @@ public class Program {
     int op = int.Parse(Console.ReadLine());
     Console.WriteLine();
     return op;
-  }
-
-  public static void Cadastro() {
-    Console.WriteLine("-------------- Cadastre-se --------------");
-    Console.Write("Informe o nome do Usuario: ");
-    string nome = Console.ReadLine();
-    Console.Write("Informe o nome do login: ");
-    string user = Console.ReadLine();
-    Console.Write("Informe a senha do Usuario: ");
-    string senha = Console.ReadLine();
-    Console.Write("Informe a data de nascimento do Usuario: ");
-    DateTime data = DateTime.Parse(Console.ReadLine());
-    Usuario obj = new Usuario {Nome = nome, User = user, Senha = senha, Nascimento = data, Admin = false};
-    NUsuario.Inserir(obj);  // Cadastra um novo usuário no sistema
-    Console.WriteLine("---- Operação realizada com sucesso! ----");
   }
 
   public static void CategoriaInserir() {
@@ -276,40 +280,34 @@ public class Program {
   }
 
   public static void UsuarioInserir() {
-    Console.WriteLine("-------- Inserir um novo Usuario --------");
-    Console.Write("Informe o nome do Usuario: ");
+    Console.WriteLine("---------- Inserir um novo admin ----------");
+    Console.Write("Informe o nome do admin: ");
     string nome = Console.ReadLine();
     Console.Write("Informe o nome do login: ");
     string user = Console.ReadLine();
-    Console.Write("Informe a senha do Usuario: ");
+    Console.Write("Informe a senha do admin: ");
     string senha = Console.ReadLine();
-    Console.Write("Informe a data de nascimento do Usuario: ");
+    Console.Write("Informe a data de nascimento do admin: ");
     DateTime data = DateTime.Parse(Console.ReadLine());
-    Console.Write("O Usuario é um administrador? (s/n) ");
-    char adm = Console.ReadLine()[0];
-    bool isAdm = false;
-    if (adm == 's'){
-      isAdm = true;
-    }
-    Usuario obj = new Usuario {Nome = nome, User = user, Senha = senha, Nascimento = data, Admin = isAdm};
+    Usuario obj = new Usuario {Nome = nome, User = user, Senha = senha, Nascimento = data, Admin = true};
     NUsuario.Inserir(obj);  // Inserir um usuário no sistema
-    Console.WriteLine("---- Operação realizada com sucesso! ----");
+    Console.WriteLine("----- Operação realizada com sucesso! -----");
   }
 
   public static void UsuarioListar() {
-    Console.WriteLine("----- Listar os Usuarios cadastrados -----");
+    Console.WriteLine("----- Listar os usuários cadastrados -----");
     foreach (Usuario obj in NUsuario.Listar())
       Console.WriteLine(obj);
     Console.WriteLine("------------------------------------------");
   }
 
   public static void UsuarioAtualizar() {
-    Console.WriteLine("---------- Atualizar um Usuario ----------");
+    Console.WriteLine("---------- Atualizar um usuário ----------");
     Console.Write("Informe o id do Usuario a ser atualizado: ");
     int id = int.Parse(Console.ReadLine());
     Console.Write("Informe o nome do Usuario: ");
     string nome = Console.ReadLine();
-    Console.Write("Informe a data de nascimento do Usuario (dd/mm/aaaa): ");
+    Console.Write("Informe a data de nascimento do usuário (dd/mm/aaaa): ");
     DateTime data = DateTime.Parse(Console.ReadLine());
     Usuario obj = new Usuario {Id = id, Nome = nome, Nascimento = data };
     NUsuario.Atualizar(obj);  // Atualizar um usuário no sistema
@@ -318,7 +316,7 @@ public class Program {
   }
 
   public static void UsuarioExcluir() {
-    Console.WriteLine("----------- Excluir um Usuario -----------");
+    Console.WriteLine("----------- Excluir um usuário -----------");
     Console.Write("Informe o id do Usuario a ser excluído: ");
     int id = int.Parse(Console.ReadLine());
     Usuario obj = new Usuario {Id = id };
@@ -336,7 +334,6 @@ public class Program {
     if (p != null) {
       if (usuarioVenda == null)
         usuarioVenda = new Venda(DateTime.Now, userLogado);
-      //NVenda.Inserir(usuarioVenda);
       NVenda.AddCarrinho(usuarioVenda, qtd, p);
     }
     else {
@@ -365,12 +362,19 @@ public class Program {
     }
     NVenda.FinalizarCompra(usuarioVenda);
     usuarioVenda = null;
-    Console.WriteLine("---- Compra realizada com sucesso! ----");
+    Console.WriteLine("--- Compra realizada com sucesso! ✔ ---");
   }
   
   public static void ClearCarrinho() {
     if (usuarioVenda != null)
       NVenda.Excluir(usuarioVenda);
     usuarioVenda = null;
+  }
+
+    public static void VerVendas() {
+    Console.WriteLine("---------- Relatório de vendas -----------");
+    foreach (Venda obj in NVenda.Listar())
+      Console.WriteLine(obj);
+    Console.WriteLine("------------------------------------------");
   }
 }

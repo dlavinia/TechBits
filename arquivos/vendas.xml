@@ -70,4 +70,26 @@
       </ItemVenda>
     </Itens>
   </Venda>
+  <Venda>
+    <Id>3</Id>
+    <Data>2023-02-08T22:59:15.174175+00:00</Data>
+    <Carrinho>false</Carrinho>
+    <IdUser>3</IdUser>
+    <NomeUser>Gilbert Azevedo</NomeUser>
+    <Itens>
+      <ItemVenda>
+        <Prod>
+          <id>1</id>
+          <qtd>3</qtd>
+          <idCat>1</idCat>
+          <titulo>Acer Aspire 5</titulo>
+          <preco>3000</preco>
+        </Prod>
+        <IdProd>1</IdProd>
+        <IdVenda>0</IdVenda>
+        <Qtd>1</Qtd>
+        <Preco>3000</Preco>
+      </ItemVenda>
+    </Itens>
+  </Venda>
 </ArrayOfVenda>

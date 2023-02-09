@@ -20,10 +20,6 @@ namespace Modelos {
       this.IdUser = user.Id;
       this.NomeUser = user.Nome;
     }
-    
-    public override string ToString() {
-      return $"{Id} - {Data} - {NomeUser}";
-    }
 
     private ItemVenda ItemListar(Produto prod) {
       foreach(ItemVenda iv in itens) 
@@ -35,7 +31,7 @@ namespace Modelos {
       return itens;
     }
 
-    public void ItemInserir( int qtd, Produto prod) {
+    public void ItemInserir(int qtd, Produto prod) {
       ItemVenda item = ItemListar(prod);
       if (item == null) {
         item = new ItemVenda(qtd, prod);
@@ -47,6 +43,10 @@ namespace Modelos {
 
     public void ItemExcluir() {
       itens.Clear();
+    }
+
+    public override string ToString() {
+      return $"{Id} - {Data} - {NomeUser}";
     }
   }
 }
